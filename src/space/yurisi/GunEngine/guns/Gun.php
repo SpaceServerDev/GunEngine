@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace space\yurisi\GunEngine\guns;
 
+use pocketmine\scheduler\TaskHandler;
+
 interface Gun {
 
 
@@ -25,7 +27,7 @@ interface Gun {
 
     public function isShootNow():bool;
 
-    public function startShoot(int $task_id);
+    public function startShoot(TaskHandler $handler);
 
     public function endShoot();
 

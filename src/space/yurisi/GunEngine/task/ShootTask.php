@@ -1,33 +1,23 @@
 <?php
-
-namespace SSC\Gun\Task;
+declare(strict_types=1);
+namespace space\yurisi\GunEngine\task;
 
 use pocketmine\network\mcpe\protocol\MovePlayerPacket;
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
 use space\yurisi\GunEngine\guns\Gun;
-use space\yurisi\GunEngine\guns\GunEvent;
+use space\yurisi\GunEngine\EventListener;
 use space\yurisi\GunEngine\Main;
 use space\yurisi\GunEngine\task\EventGenerator;
 
 class ShootTask extends Task {
 
-    private $player;
-
-    /**
-     * @var GunEvent
-     */
-    private $event;
-
-    private $gun;
-
     private $space = "";
 
-    public function __construct(Player $player, Gun $gun,GunEvent $event) {
-        $this->player = $player;
-        $this->gun = $gun;
-        $this->event=$event;
-
+    public function __construct(
+        private Player $player,
+        private Gun $gun,
+        private EventListener $event) {
     }
 
     /**
@@ -78,15 +68,12 @@ class ShootTask extends Task {
             } else {
                 $this->getHandler()->cancel();
                 $this->gun->endShoot();
-                $this->event->sound("music.cartridge1",$this->player->getFloorX(),$this->player->getFloorY(),$this->player->getFloorZ(),$this->player->getLevel());
-
-                return;
+                $this->event->sound("music.cartridge1",$this->player->getPosition()->getFloorX(),$this->player->getPosition()->getFloorY(),$this->player->getPosition()->getFloorZ(),$this->player->getWorld());
             }
         } else {
             $this->getHandler()->cancel();
             $this->gun->endShoot();
-            $this->event->sound("music.cartridge1",$this->player->getFloorX(),$this->player->getFloorY(),$this->player->getFloorZ(),$this->player->getLevel());
-            return;
+            $this->event->sound("music.cartridge1",$this->player->getPosition()->getFloorX(),$this->player->getPosition()->getFloorY(),$this->player->getPosition()->getFloorZ(),$this->player->getWorld());
         }
     }
 }

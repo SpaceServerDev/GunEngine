@@ -1,5 +1,5 @@
 name: GunEngine
-main: space\yurisi\GunEngine
+main: space\yurisi\GunEngine\Main
 author: yurisi
 # depend:
 #   - EconomyAPI
