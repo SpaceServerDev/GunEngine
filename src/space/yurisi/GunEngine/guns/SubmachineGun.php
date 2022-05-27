@@ -3,14 +3,12 @@ declare(strict_types=1);
 
 namespace space\yurisi\GunEngine\guns;
 
-use pocketmine\scheduler\TaskHandler;
+class SubmachineGun extends Gun {
 
-class AssaultRifle extends Gun {
-
-    protected const MAX_AMMO = 30;
+    const MAX_AMMO=40;
 
     public function getName(): string {
-        return "AssaultRifle";
+        return "SubmachineGun";
     }
 
     public function getReloadTick(): int {
@@ -21,27 +19,27 @@ class AssaultRifle extends Gun {
         return 0;
     }
 
-    public function getRecoil(): float {
-        return 0.05;
+    public function getRecoil():float {
+        return 0.08;
     }
 
     public function getDelayTick(): float {
-        return 1;
-    }
-
-    public function getPeriodTick(): float {
-        return 0.5;
-    }
-
-    public function getDamage(): int {
-        return 3;
-    }
-
-    public function getKnockBack(): float {
         return 0.2;
     }
 
-    public function getDistance(): int {
-        return 25;
+    public function getPeriodTick(): float {
+        return 0.4;
+    }
+
+    public function getDamage() {
+        return 4;
+    }
+
+    public function getKnockBack() {
+        return 0.2;
+    }
+
+    public function getDistance() {
+        return 20;
     }
 }

@@ -28,14 +28,14 @@ class ReloadTask extends Task {
      * @return void
      */
     public function onRun():void {
-        $main->getGunManager()->getGunData($this->gun, $this->serial)->endCoolDown();
+        $this->main->getGunManager()->getGunData($this->gun, $this->serial)->endCoolDown();
         if ($this->player->getWorld() instanceof World) {
             if ($this->reload) {
                 $pk = new TextPacket();
                 $pk->type = 4;
                 $pk->message = $this->gun . " Reload Complete";
-                $this->player->dataPacket($pk);
-                $this->event->sound("music.machinegun-magazine-set1", $this->player->getFloorX(), $this->player->getFloorY(), $this->player->getFloorZ(), $this->player->getLevel());
+                $this->player->getNetworkSession()->sendDataPacket($pk);
+                $this->event->sound("music.machinegun-magazine-set1", $this->player->getPosition()->getFloorX(), $this->player->getPosition()->getFloorY(), $this->player->getPosition()->getFloorZ(), $this->player->getWorld());
             }
         }
         $this->getHandler()->cancel();

@@ -17,6 +17,7 @@ class Main extends PluginBase {
     public function getGunManager():GunManager{
         return $this->gunManager;
     }
+
     protected function onDisable(): void {
 
     }

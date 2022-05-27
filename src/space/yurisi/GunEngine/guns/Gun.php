@@ -1,51 +1,86 @@
 <?php
 declare(strict_types=1);
+
 namespace space\yurisi\GunEngine\guns;
 
 use pocketmine\scheduler\TaskHandler;
 
-interface Gun {
+abstract class Gun {
 
+    protected const MAX_AMMO = 30;
 
-    public function getName():string;
+    protected bool $cool_down = false;
 
-    public function getAmmo():int;
+    protected bool $shoot_now = false;
 
-    public function removeAmmo();
+    protected int $ammo;
 
-    public function reload();
+    protected ?TaskHandler $handler;
 
-    public function getMaxAmmo():int;
+    public function getAmmo(): int {
+        return $this->ammo;
+    }
 
-    public function startCoolDown();
+    public function removeAmmo() {
+        $this->ammo--;
+    }
 
-    public function endCoolDown();
+    public function reload() {
+        $this->ammo = self::MAX_AMMO;
+    }
 
-    public function getCoolDown();
+    public function getMaxAmmo(): int {
+        return self::MAX_AMMO;
+    }
 
-    public function getReloadTick():int;
+    public function startCoolDown() {
+        $this->cool_down = true;
+    }
 
-    public function isShootNow():bool;
+    public function endCoolDown() {
+        $this->cool_down = false;
+    }
 
-    public function startShoot(TaskHandler $handler);
+    public function getCoolDown(): bool {
+        return $this->cool_down;
+    }
 
-    public function endShoot();
+    public function isShootNow(): bool {
+        return $this->shoot_now;
+    }
 
-    public function getTaskId();
+    public function startShoot(TaskHandler $handler) {
+        $this->shoot_now = true;
+        $this->handler = $handler;
+    }
 
-    public function getDelayTick():float;
+    public function endShoot() {
+        $this->shoot_now = false;
+        $this->handler = null;
+    }
 
-    public function getPeriodTick():float;
+    public function getTaskId(): ?TaskHandler {
+        if (!$this->isShootNow()) {
+            return null;
+        }
+        return $this->handler;
+    }
 
-    public function getCoolDownTick():int;
+    abstract public function getReloadTick(): int;
 
-    public function getRecoil():float;
+    abstract public function getDelayTick(): float;
 
-    public function getDamage();
+    abstract public function getPeriodTick(): float;
 
-    public function getKnockBack();
+    abstract public function getCoolDownTick(): int;
 
-    public function getDistance();
+    abstract public function getRecoil(): float;
+
+    abstract public function getDamage();
+
+    abstract public function getKnockBack();
+
+    abstract public function getDistance();
 
 
 }
