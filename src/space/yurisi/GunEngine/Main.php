@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace space\yurisi\pluginname;
+namespace space\yurisi\GunEngine;
 
 use pocketmine\plugin\PluginBase;
 

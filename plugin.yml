@@ -1,5 +1,5 @@
-name: PM-PluginTemplate
-main: space\yurisi\pluginname
+name: GunEngine
+main: space\yurisi\GunEngine
 author: yurisi
 # depend:
 #   - EconomyAPI
