@@ -31,15 +31,15 @@ class SubmachineGun extends Gun {
         return 0.4;
     }
 
-    public function getDamage() {
+    public function getDamage():int {
         return 4;
     }
 
-    public function getKnockBack() {
+    public function getKnockBack():float {
         return 0.2;
     }
 
-    public function getDistance() {
+    public function getDistance():int {
         return 20;
     }
 }

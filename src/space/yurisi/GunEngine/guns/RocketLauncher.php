@@ -3,19 +3,9 @@ declare(strict_types=1);
 
 namespace space\yurisi\GunEngine\guns;
 
-use pocketmine\scheduler\TaskHandler;
-
 class RocketLauncher extends Gun {
 
     const MAX_AMMO = 1;
-
-    protected bool $cool_down = false;
-
-    protected bool $shoot_now = false;
-
-    protected int $ammo = self::MAX_AMMO;
-
-    protected ?TaskHandler $handler;
 
     public function getName(): string {
         return "RocketLauncher";

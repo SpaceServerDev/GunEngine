@@ -76,11 +76,11 @@ abstract class Gun {
 
     abstract public function getRecoil(): float;
 
-    abstract public function getDamage();
+    abstract public function getDamage(): int;
 
-    abstract public function getKnockBack();
+    abstract public function getKnockBack(): float;
 
-    abstract public function getDistance();
+    abstract public function getDistance(): int;
 
 
 }
