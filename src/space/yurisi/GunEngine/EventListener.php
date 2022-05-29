@@ -23,6 +23,7 @@ use space\yurisi\GunEngine\task\ReloadTask;
 use space\yurisi\GunEngine\task\EventGenerator;
 
 class EventListener implements Listener {
+
     public function __construct(private Main $main) {
     }
 
@@ -126,14 +127,14 @@ class EventListener implements Listener {
         }
     }
 
-    private function reloadEvent(Player $player, Gun $gun_data, string $gun, string $serial) {
+    private function reload(Player $player, Gun $gun_data, string $gun, string $serial) {
         $player->sendPopup("Reloaded");
         $gun_data->reload();
         $gun_data->startCoolDown();
         $this->main->getScheduler()->scheduleDelayedTask(new ReloadTask($player, $this, $gun, $serial, $this->main), $gun_data->getReloadTick());
     }
 
-    public function shootEvent(Player $entity, Gun $gundata): \Generator {
+    public function shoot(Player $entity, Gun $gundata): \Generator {
         $particle = new FlameParticle();
         $particle->encode(new Vector3($entity->getPosition()->x, $entity->getPosition()->y + 1.5, $entity->getPosition()->z));
 
@@ -141,7 +142,7 @@ class EventListener implements Listener {
         for ($i = 0; $i < $gundata->getDistance(); $i++) {
             yield;
             $pos = $particle->add($increase);
-            if ($entity->level instanceof Level) {
+            if ($entity->level instanceof World) {
                 if (!$entity->level->getBlock($pos)->canBeFlowedInto()) {
                     foreach ($entity->level->getPlayers() as $player) {
                         if ($player->distance($pos) < 8.0 && $entity !== $player) {
@@ -171,7 +172,7 @@ class EventListener implements Listener {
         $increase = $entity->getDirectionVector()->normalize();
         for ($i = 0; $i < $gundata->getDistance(); $i++) {
             $pos = $particle->add($increase);
-            if ($entity->level instanceof Level) {
+            if ($entity->level instanceof World) {
                 if (!$entity->level->getBlock($pos)->canBeFlowedInto()) {
                     foreach ($entity->level->getPlayers() as $player) {
                         if ($player->distance($pos) < 8.0 && $entity !== $player) {
